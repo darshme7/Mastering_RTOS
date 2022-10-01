@@ -143,7 +143,7 @@ extern "C" {
 *    Convenience define to be used for SEGGER_SYSVIEW_SendSysDesc().
 */
 #ifndef   SEGGER_SYSVIEW_APP_NAME
-  #define SEGGER_SYSVIEW_APP_NAME                 "SystemView-enabled Application"
+  #define SEGGER_SYSVIEW_APP_NAME                 "FreeRTOS"
 #endif
 
 /*********************************************************************
@@ -158,7 +158,7 @@ extern "C" {
 *    Convenience define to be used for SEGGER_SYSVIEW_SendSysDesc().
 */
 #ifndef   SEGGER_SYSVIEW_DEVICE_NAME
-  #define SEGGER_SYSVIEW_DEVICE_NAME              "undefined device"
+  #define SEGGER_SYSVIEW_DEVICE_NAME              "STM32"
 #endif
 
 /*********************************************************************
@@ -265,7 +265,7 @@ extern "C" {
 *    1024
 */
 #ifndef   SEGGER_SYSVIEW_RTT_BUFFER_SIZE
-  #define SEGGER_SYSVIEW_RTT_BUFFER_SIZE          (1024)
+  #define SEGGER_SYSVIEW_RTT_BUFFER_SIZE          (1024*4)
 #endif
 
 /*********************************************************************

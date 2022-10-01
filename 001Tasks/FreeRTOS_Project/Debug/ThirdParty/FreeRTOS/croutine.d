@@ -1,6 +1,13 @@
 ThirdParty/FreeRTOS/croutine.o: ../ThirdParty/FreeRTOS/croutine.c \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/FreeRTOS.h \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/FreeRTOSConfig.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER_SYSVIEW.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/Global.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER_SYSVIEW_ConfDefaults.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/SEGGER_SYSVIEW_Conf.h \
+ D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/SEGGER_RTT_Conf.h \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/projdefs.h \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/portable.h \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/deprecated_definitions.h \
@@ -11,6 +18,13 @@ ThirdParty/FreeRTOS/croutine.o: ../ThirdParty/FreeRTOS/croutine.c \
  D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/croutine.h
 D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/FreeRTOS.h:
 D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/FreeRTOSConfig.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/OS/SEGGER_SYSVIEW_FreeRTOS.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER_SYSVIEW.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/Global.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/SEGGER/SEGGER_SYSVIEW_ConfDefaults.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/SEGGER_SYSVIEW_Conf.h:
+D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/SEGGER/Config/SEGGER_RTT_Conf.h:
 D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/projdefs.h:
 D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/portable.h:
 D:/Courses/Mastering_RTOS/workspace/RTOS_workspace/FreeRTOS_Project/ThirdParty/FreeRTOS/include/deprecated_definitions.h:

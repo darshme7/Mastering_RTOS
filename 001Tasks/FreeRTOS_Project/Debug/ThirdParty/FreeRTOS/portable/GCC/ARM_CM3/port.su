@@ -2,8 +2,8 @@
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:195:13:prvTaskExitError	24	static,ignoring_inline_asm
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:221:6:SVC_Handler	0	static,ignoring_inline_asm
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:241:13:prvPortStartFirstTask	0	static,ignoring_inline_asm
-../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:262:12:xPortStartScheduler	24	static
-../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:360:6:vInitPrioGroupValue	24	static
+../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:262:12:xPortStartScheduler	24	static,ignoring_inline_asm
+../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:360:6:vInitPrioGroupValue	24	static,ignoring_inline_asm
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:436:6:vPortEndScheduler	16	static,ignoring_inline_asm
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:444:6:vPortEnterCritical	16	static,ignoring_inline_asm
 ../ThirdParty/FreeRTOS/portable/GCC/ARM_CM3/port.c:461:6:vPortExitCritical	16	static,ignoring_inline_asm

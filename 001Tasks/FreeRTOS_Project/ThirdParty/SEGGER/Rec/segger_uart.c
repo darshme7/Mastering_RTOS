@@ -24,19 +24,6 @@ Purpose : Terminal control for Flasher using USART1 on PA9/PA10
 #define RCC_APB1ENR         *(volatile uint32_t*)(RCC_BASE_ADDR + OFF_APB1ENR)
 #define RCC_APB2ENR         *(volatile uint32_t*)(RCC_BASE_ADDR + OFF_APB2ENR)
 
-#define GPIOA_BASE_ADDR     0x40010800
-
-#define OFF_MODER           0x00        // GPIOx_MODER    (GPIO port mode register)
-#define OFF_OTYPER          0x04        // GPIOx_OTYPER   (GPIO port output type register)
-#define OFF_OSPEEDR         0x08        // GPIOx_OSPEEDR  (GPIO port output speed register)
-#define OFF_PUPDR           0x0C        // GPIOx_PUPDR    (GPIO port pull-up/pull-down register)
-#define OFF_IDR             0x10        // GPIOx_IDR      (GPIO port input data register)
-#define OFF_ODR             0x14        // GPIOx_ODR      (GPIO port output data register)
-#define OFF_BSRR            0x18        // GPIOx_BSRR     (GPIO port bit set/reset register)
-#define OFF_LCKR            0x1C        // GPIOx_LCKR     (GPIO port configuration lock register)
-#define OFF_AFRL            0x20        // GPIOx_AFRL     (GPIO alternate function low register)
-#define OFF_AFRH            0x24        // GPIOx_AFRH     (GPIO alternate function high register)
-
 #define USART1_BASE_ADDR    0x40013800
 #define USART2_BASE_ADDR    0x40004400
 
@@ -48,16 +35,9 @@ Purpose : Terminal control for Flasher using USART1 on PA9/PA10
 #define OFF_CR3             0x14        // Control register 3
 
 
-#define UART_BASECLK        OS_FSYS / 4       // USART2 runs on APB1 clock
-#define GPIO_BASE_ADDR      GPIOA_BASE_ADDR
+#define UART_BASECLK        OS_FSYS / 2       // USART2 runs on APB1 clock
 #define USART_BASE_ADDR     USART2_BASE_ADDR
-#define GPIO_UART_TX_BIT    2               // USART2 TX: Pin pa2
-#define GPIO_UART_RX_BIT    3                 // USART2 RX: Pin pa3
 #define USART_IRQn          USART2_IRQn
-
-#define GPIO_MODER          *(volatile uint32_t*)(GPIO_BASE_ADDR + OFF_MODER)
-#define GPIO_AFRH           *(volatile uint32_t*)(GPIO_BASE_ADDR + OFF_AFRH)
-#define GPIO_AFRL           *(volatile uint32_t*)(GPIO_BASE_ADDR + OFF_AFRL)
 
 #define USART_SR            *(volatile uint32_t*)(USART_BASE_ADDR + OFF_SR)
 #define USART_DR            *(volatile uint32_t*)(USART_BASE_ADDR + OFF_DR)
@@ -217,22 +197,17 @@ void HIF_UART_EnableTXEInterrupt(void) {
 *       HIF_UART_Init()
 */
 void HIF_UART_Init(uint32_t Baudrate, UART_ON_TX_FUNC_P cbOnTx, UART_ON_RX_FUNC_P cbOnRx) {
+
   uint32_t Div;
   //
   // Configure USART RX/TX pins for alternate function AF7
   //
   RCC_APB1ENR |= (1 <<  17);        // Enable USART2 clock
-  RCC_APB2ENR |= (1 <<  2);        // Enable IO port A clock
+ // RCC_AHB1ENR |= (1 <<  0);        // Enable IO port A clock
 
-  //
-  // Configure USART RX/TX pins for alternate function usage
-  //
-
-  //
   // Initialize USART
   //
   USART_CR1 = 0
-            | (1 << 15)                         // OVER8  = 1; Oversampling by 8
             | (1 << 13)                         // UE     = 1; USART enabled
             | (0 << 12)                         // M      = 0; Word length is 1 start bit, 8 data bits
             | (0 << 10)                         // PCE    = 0; No parity control
@@ -244,13 +219,12 @@ void HIF_UART_Init(uint32_t Baudrate, UART_ON_TX_FUNC_P cbOnTx, UART_ON_RX_FUNC_
             | (0 << 12)                         // STOP = 00b; 1 stop bit
             ;
   USART_CR3 = 0
-            | (0 << 11)                         // ONEBIT = 0; Three sample bit method
             | (1 <<  7)                         // DMAT   = 1; DMA for transmitter enabled
             ;
   //
   // Set baudrate
   //
-  Div = Baudrate * 8;                       // We use 8x oversampling.
+  Div = Baudrate * 16;                       // We use 8x oversampling.
   Div = ((2 * (UART_BASECLK)) / Div) + 1;   // Calculate divider for baudrate and round it correctly. This is necessary to get a tolerance as small as possible.
   Div = Div / 2;
   if (Div > 0xFFF) {

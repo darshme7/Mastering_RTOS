@@ -37,7 +37,8 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define    DWT_CONTROL     *((volatile uint32_t *)0xE0001000)
+#define    SCB_DEMCR         *((volatile uint32_t *)0xE000EDFC)
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -51,6 +52,7 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 static void task1_handler(void * parameters);
 static void task2_handler(void * parameters);
+extern void SEGGER_UART_init(long unsigned int);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -83,12 +85,18 @@ int main(void)
 	SystemClock_Config();
 
 	/* USER CODE BEGIN SysInit */
-
+	SEGGER_UART_init(230400);
 	/* USER CODE END SysInit */
 
 	/* Initialize all configured peripherals */
 	MX_GPIO_Init();
 	/* USER CODE BEGIN 2 */
+
+	SCB_DEMCR  |= (1<<24);
+	DWT_CONTROL|= (1<<0);
+
+	SEGGER_SYSVIEW_Conf();
+
 	status = xTaskCreate(task1_handler, "Task-1", 200, "Hello World from Task-1", 2, &task1_handle);
 	configASSERT(status==pdPASS);
 	status = xTaskCreate(task2_handler, "Task-2", 200, "Hello World from Task-2", 2, &task2_handle);
@@ -119,10 +127,13 @@ void SystemClock_Config(void)
 	/** Initializes the RCC Oscillators according to the specified parameters
 	 * in the RCC_OscInitTypeDef structure.
 	 */
-	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
 	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+	RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
 	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 	{
 		Error_Handler();
@@ -132,12 +143,12 @@ void SystemClock_Config(void)
 	 */
 	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
 			|RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
 	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
 	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
 	{
 		Error_Handler();
 	}
@@ -150,27 +161,54 @@ void SystemClock_Config(void)
  */
 static void MX_GPIO_Init(void)
 {
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 	/* GPIO Ports Clock Enable */
+	__HAL_RCC_GPIOD_CLK_ENABLE();
 	__HAL_RCC_GPIOA_CLK_ENABLE();
+
+	/*Configure GPIO pin Output Level */
+	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7, GPIO_PIN_RESET);
+
+	/*Configure GPIO pins : PA2 PA9 */
+	GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_9;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : PA3 PA10 */
+	GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	/*Configure GPIO pins : PA5 PA6 PA7 */
+	GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
 /* USER CODE BEGIN 4 */
+
 static void task1_handler(void * parameters){
 
 	while(1){
-		printf("%s\n",(char*)parameters);
+		SEGGER_SYSVIEW_PrintfTarget((char*)parameters);
 		taskYIELD();
 	}
 }
 static void task2_handler(void * parameters){
 
 	while(1){
-		printf("%s\n",(char*)parameters);
+		SEGGER_SYSVIEW_PrintfTarget((char*)parameters);
 		taskYIELD();
 	}
 }
+
+
 /* USER CODE END 4 */
 
 /**
