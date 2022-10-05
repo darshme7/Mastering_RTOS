@@ -1,0 +1,10 @@
+../Drivers/CMSIS/Include/core_cm3.h:1511:22:__NVIC_EnableIRQ	16	static
+../Drivers/CMSIS/Include/core_cm3.h:1639:22:__NVIC_SetPriority	16	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:83:13:_StartSysView	16	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:92:13:_cbOnUARTRx	16	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:103:12:_cbOnUARTTx	24	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:120:6:SEGGER_UART_init	16	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:130:6:HIF_UART_WaitForTxEnd	4	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:151:6:USART2_IRQHandler	24	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:189:6:HIF_UART_EnableTXEInterrupt	4	static
+../ThirdParty/SEGGER/Rec/segger_uart.c:199:6:HIF_UART_Init	32	static
